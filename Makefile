@@ -5,7 +5,9 @@ INC=-I.
 
 CROSS_COMPILE=arm-linux-
 #gnu c compiler
-CC=$(CROSS_COMPILE)gcc
+CC=$(CROSS_COMPILE)gcc 
+#gnu sam compiler
+AS=$(CROSS_COMPILE)as
 #generate ELF format file
 LD=$(CROSS_COMPILE)ld
 #STL generate 
@@ -20,19 +22,20 @@ STRIP=$(CROSS_COMPILE)strip
 READELF=$(CROSS_COMPILE)readelf
 
 CFLAGS =-g -O2 -Wall -nostdinc -nostdlib -fno-builtin ${INC}
-AFLAGS =-${CFLAGS} -D_ASSEMBLY__ 
+AFLAGS =${CFLAGS} -D_ASSEMBLY__
 
-LDFALGS=-Ttext ${TEXTBASE}
+LDFALGS=-T${TARGET}.lds
 
 SRC_C=$(wildcard *.c)
 SRC_S=$(wildcard *.S)
 
 OBJ_C=$(patsubst %.c,%.o,$(SRC_C))
-OBJ_S=$(patsubst %.c,%.o,$(SRC_S))
+OBJ_S=$(patsubst %.S,%.o,$(SRC_S))
 OBJ_ALL=$(OBJ_C) $(OBJ_S)
 
 .PHONY:all
 all:${OBJ_ALL}
+	echo "${OBJ_ALL}"
 	${LD} ${LDFALGS} -o ${TARGET}.elf ${OBJ_ALL}
 	${OBJCOPY} -O binary -S ${TARGET}.elf ${TARGET}.bin
 	rm -rf *.elf *.o
