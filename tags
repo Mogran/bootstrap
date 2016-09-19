@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AFLAGS	Makefile	/^AFLAGS = ${CFLAGS} -D_ASSEMBLY__$/;"	m
+AR	Makefile	/^AR       = $(CROSS_COMPILE)ar$/;"	m
+CC	Makefile	/^CC       = $(CROSS_COMPILE)gcc $/;"	m
+CFLAGS	Makefile	/^CFLAGS =-g -O2 -Wall -nostdinc -nostdlib -fno-builtin$/;"	m
+CROSS_COMPILE	Makefile	/^CROSS_COMPILE=arm-linux-$/;"	m
+GPACON	bootstrap.c	1;"	d	file:
+GPADAT	bootstrap.c	2;"	d	file:
+GPBCON	bootstrap.c	4;"	d	file:
+GPBDAT	bootstrap.c	5;"	d	file:
+GPBUDP	bootstrap.c	6;"	d	file:
+LD	Makefile	/^LD       = $(CROSS_COMPILE)ld$/;"	m
+LDFALGS	Makefile	/^LDFALGS= -nostartfiles -T $(TARGET).lds -Ttext $(TEXTBASE)$/;"	m
+OBJCOPY	Makefile	/^OBJCOPY  = $(CROSS_COMPILE)objcopy$/;"	m
+OBJDUMP	Makefile	/^OBJDUMP  = $(CROSS_COMPILE)objdump$/;"	m
+OBJ_ALL	Makefile	/^OBJ_ALL=$(OBJ_C) $(OBJ_S)$/;"	m
+OBJ_C	Makefile	/^OBJ_C=$(patsubst %.c,%.o,$(SRC_C))$/;"	m
+OBJ_S	Makefile	/^OBJ_S=$(patsubst %.S,%.o,$(SRC_S))$/;"	m
+READELF	Makefile	/^READELF  = $(CROSS_COMPILE)readelf$/;"	m
+SRC_C	Makefile	/^SRC_C=$(wildcard *.c)$/;"	m
+SRC_S	Makefile	/^SRC_S=$(wildcard *.S)$/;"	m
+STRIP	Makefile	/^STRIP    = $(CROSS_COMPILE)strip$/;"	m
+TARGET	Makefile	/^TARGET=bootstrap$/;"	m
+TEXTBASE	Makefile	/^TEXTBASE=0x00000000$/;"	m
+_start	start.S	/^_start:$/;"	l
+beep_init	bootstrap.c	/^void beep_init(void)$/;"	f	signature:(void)
+beep_on_off	bootstrap.c	/^void beep_on_off(void)$/;"	f	signature:(void)
+halt_loop	start.S	/^halt_loop:$/;"	l
+led_display	bootstrap.c	/^void led_display(void)$/;"	f	signature:(void)
+led_init	bootstrap.c	/^void led_init(void)$/;"	f	signature:(void)
+main	bootstrap.c	/^int main(int argc, char *argv[])$/;"	f	signature:(int argc, char *argv[])
+mdelay	bootstrap.c	/^void mdelay(unsigned int count)$/;"	f	signature:(unsigned int count)

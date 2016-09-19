@@ -1,30 +1,26 @@
 TARGET=bootstrap
-
-TEXTBASE=0x30008000
-INC=-I.
+TEXTBASE=0x00000000
 
 CROSS_COMPILE=arm-linux-
 #gnu c compiler
-CC=$(CROSS_COMPILE)gcc 
-#gnu sam compiler
-AS=$(CROSS_COMPILE)as
+CC       = $(CROSS_COMPILE)gcc 
 #generate ELF format file
-LD=$(CROSS_COMPILE)ld
+LD       = $(CROSS_COMPILE)ld
 #STL generate 
-AR=$(CROSS_COMPILE)ar
+AR       = $(CROSS_COMPILE)ar
 #arm-linux-copy src_file dst_file (different file format)
-OBJCOPY=$(CROSS_COMPILE)objcopy
+OBJCOPY  = $(CROSS_COMPILE)objcopy
 #arm-linux-dump src_file ? remove src_file's symbol and unused info.
-OBJDUMP=$(CROSS_COMPILE)objdump
+OBJDUMP  = $(CROSS_COMPILE)objdump
 #arm-linux-strip 
-STRIP=$(CROSS_COMPILE)strip
+STRIP    = $(CROSS_COMPILE)strip
 #arm-linux-readelf
-READELF=$(CROSS_COMPILE)readelf
+READELF  = $(CROSS_COMPILE)readelf
 
-CFLAGS =-g -O2 -Wall -nostdinc -nostdlib -fno-builtin ${INC}
-AFLAGS =${CFLAGS} -D_ASSEMBLY__
+CFLAGS =-g -O2 -Wall -nostdinc -nostdlib -fno-builtin
+AFLAGS = ${CFLAGS} -D_ASSEMBLY__
 
-LDFALGS=-T${TARGET}.lds
+LDFALGS= -nostartfiles -T $(TARGET).lds -Ttext $(TEXTBASE)
 
 SRC_C=$(wildcard *.c)
 SRC_S=$(wildcard *.S)
@@ -35,10 +31,11 @@ OBJ_ALL=$(OBJ_C) $(OBJ_S)
 
 .PHONY:all
 all:${OBJ_ALL}
-	echo "${OBJ_ALL}"
 	${LD} ${LDFALGS} -o ${TARGET}.elf ${OBJ_ALL}
 	${OBJCOPY} -O binary -S ${TARGET}.elf ${TARGET}.bin
 	rm -rf *.elf *.o
+	rm -rf /mnt/hgfs/share/bootstrap.bin
+	cp -a ${TARGET}.bin /mnt/hgfs/share/	
 
 %.o:%.c
 	${CC} ${CFLAGS} -c -o $@ $<
