@@ -24,7 +24,7 @@ void led_init(void)
 
 void mdelay(void)
 {
-	unsigned int tm = 4000000;
+	volatile unsigned int tm = 4000000; //local varible needs to vlolatile! 
 	
 	while(tm--);
 }
@@ -53,12 +53,17 @@ void beep_init(void)
 
 void beep_on_off(void)
 {
+#if 0	
 	GPBDAT |= (1 << 5); //beep Beep
 	delay(80000000);
-//	mdelay( );
 	GPBDAT &= ~(1 << 5); //close Beep
 	delay(80000000);
-//	mdelay( );
+#else
+	GPBDAT |= (1 << 5); //beep Beep
+	mdelay( );
+	GPBDAT &= ~(1 << 5); //close Beep
+	mdelay( );
+#endif
 }
 
 
