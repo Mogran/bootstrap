@@ -22,9 +22,9 @@ void led_init(void)
 	GPADAT |= (3 << 23);
 }
 
-void mdelay(unsigned int count)
+void mdelay(void)
 {
-	unsigned int tm = count;
+	unsigned int tm = 4000000;
 	
 	while(tm--);
 }
@@ -32,9 +32,9 @@ void mdelay(unsigned int count)
 void led_display(void)
 {
 	GPADAT |= (3 << 23);
-	mdelay(1000000);
+	mdelay();
 	GPADAT &= ~(3 << 23);
-	mdelay(1000000);
+	mdelay();
 }
 
 void beep_init(void)
@@ -54,11 +54,11 @@ void beep_init(void)
 void beep_on_off(void)
 {
 	GPBDAT |= (1 << 5); //beep Beep
-//	delay(4000000);
-	mdelay(4000000);
+	delay(80000000);
+//	mdelay( );
 	GPBDAT &= ~(1 << 5); //close Beep
-//	delay(4000000);
-	mdelay(4000000);
+	delay(80000000);
+//	mdelay( );
 }
 
 

@@ -28,10 +28,14 @@ STRIP	Makefile	/^STRIP    = $(CROSS_COMPILE)strip$/;"	m
 TARGET	Makefile	/^TARGET=bootstrap$/;"	m
 TEXTBASE	Makefile	/^TEXTBASE=0x00000000$/;"	m
 _start	start.S	/^_start:$/;"	l
-beep_init	bootstrap.c	/^void beep_init(void)$/;"	f	signature:(void)
-beep_on_off	bootstrap.c	/^void beep_on_off(void)$/;"	f	signature:(void)
+beep_init	bootstrap.c	/^void beep_init(void)$/;"	f
+beep_on_off	bootstrap.c	/^void beep_on_off(void)$/;"	f
+clean_bss	start.S	/^clean_bss:$/;"	l
+clean_loop	start.S	/^clean_loop:$/;"	l
+delay	bootstrap.c	/^static inline void delay (unsigned long loops)  $/;"	f	file:
 halt_loop	start.S	/^halt_loop:$/;"	l
-led_display	bootstrap.c	/^void led_display(void)$/;"	f	signature:(void)
-led_init	bootstrap.c	/^void led_init(void)$/;"	f	signature:(void)
-main	bootstrap.c	/^int main(int argc, char *argv[])$/;"	f	signature:(int argc, char *argv[])
-mdelay	bootstrap.c	/^void mdelay(unsigned int count)$/;"	f	signature:(unsigned int count)
+init_stack	start.S	/^init_stack:$/;"	l
+led_display	bootstrap.c	/^void led_display(void)$/;"	f
+led_init	bootstrap.c	/^void led_init(void)$/;"	f
+main	bootstrap.c	/^int main(int argc, char *argv[])$/;"	f
+mdelay	bootstrap.c	/^void mdelay(unsigned int count)$/;"	f

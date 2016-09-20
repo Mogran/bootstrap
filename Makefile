@@ -33,7 +33,6 @@ OBJ_ALL=$(OBJ_C) $(OBJ_S)
 all:${OBJ_ALL}
 	${LD} ${LDFALGS} -o ${TARGET}.elf ${OBJ_ALL}
 	${OBJCOPY} -O binary -S ${TARGET}.elf ${TARGET}.bin
-	rm -rf *.elf *.o
 	rm -rf /mnt/hgfs/share/bootstrap.bin
 	cp -a ${TARGET}.bin /mnt/hgfs/share/	
 
@@ -43,5 +42,5 @@ all:${OBJ_ALL}
 	${CC} ${AFLAGS} -c -o $@ $<
 
 clean:
-	rm -rf *.elf ${TARGET}.bin 
+	rm -rf *.elf ${TARGET}.bin *.o
 

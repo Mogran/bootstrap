@@ -1,8 +1,18 @@
 #This is demo project for arm926ej-s kernel
 .section .data
-.equ WDTCON, 0x53000000  @wdtcon
-.equ INTMSK1, 0x4A000008 @intmask1
-.equ INTMSK2, 0x4A000048 @intmask2
+.equ WDTCON,   0x53000000
+.equ INTMSK1,  0x4A000008
+.equ INTMSK2,  0x4A000048
+.equ LOCKCON0, 0x4C000000
+.equ LOCKCON1, 0x4C000004
+.equ MPLLCON,  0x4C000010
+.equ EPLLCON,  0x4C000018
+.equ CLKSRC,   0x4C000020
+.equ CLKDIV0,  0x4C000024
+.equ CLKDIV1,  0x4C000028
+.equ CLKDIV2,  0x4C00002C
+.equ HCLKCON,  0x4C000030
+.equ PCLKCON,  0x4C000034
 
 .section .text
 .globl _start
@@ -35,6 +45,43 @@ _start:
 	orr r0, r0, #0x00001000   @ enable I-cache 
 	mcr p15, 0, r0, c1, c0, 0 @ write back c1 control register
 
+	ldr r0, =CLKDIV0
+	ldr r1, =0x0000022d
+	str r1, [r0]
+
+	ldr r0, =HCLKCON
+	ldr r1, =0xffffffff
+	str r1, [r0]
+
+	ldr r0, =PCLKCON
+	ldr r1, =0xffffffff
+	str r1, [r0]
+
+	ldr r0, =MPLLCON
+	ldr r1, =0x00640061 @Mpll Fout = 800MHZ
+	str r1, [r0]
+
+	ldr r0, =EPLLCON
+	ldr r1, =0x00200102 @Epll Fout=96MHZ
+	str r1, [r0]
+
+	ldr r0, =LOCKCON0
+	ldr r1, =0x0000ffff
+	str r1, [r0]
+
+	ldr r0, =LOCKCON1
+	ldr r1, =0x0000ffff
+	str r1, [r0]
+
+	ldr r0, =CLKSRC
+	mov r1, #0x10 
+	str r1, [r0]
+
+#wait until clock stablize all clock.
+	mov r2, #0x10000
+1:  subs r2, r2, #1
+	bne 1b
+
 	bl init_stack @because we will jump to C running enviroment
 	
 	bl clean_bss
@@ -43,9 +90,10 @@ _start:
 
 halt_loop:
 	b halt_loop
+	
 
 init_stack:
-	ldr sp, =8196 
+	ldr sp, =8192 
 	mov pc, lr
 
 clean_bss:
