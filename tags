@@ -6,6 +6,7 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 AFLAGS	Makefile	/^AFLAGS = ${CFLAGS} -D_ASSEMBLY__$/;"	m
 AR	Makefile	/^AR       = $(CROSS_COMPILE)ar$/;"	m
+BOOTSTARP_H__	bootstrap.h	2;"	d
 CC	Makefile	/^CC       = $(CROSS_COMPILE)gcc $/;"	m
 CFLAGS	Makefile	/^CFLAGS =-g -O2 -Wall -nostdinc -nostdlib -fno-builtin$/;"	m
 CROSS_COMPILE	Makefile	/^CROSS_COMPILE=arm-linux-$/;"	m
@@ -14,8 +15,37 @@ GPADAT	bootstrap.c	2;"	d	file:
 GPBCON	bootstrap.c	4;"	d	file:
 GPBDAT	bootstrap.c	5;"	d	file:
 GPBUDP	bootstrap.c	6;"	d	file:
+GPHCON	bootstrap.h	70;"	d
+GPHDAT	bootstrap.h	71;"	d
+GPHUDP	bootstrap.h	72;"	d
 LD	Makefile	/^LD       = $(CROSS_COMPILE)ld$/;"	m
 LDFALGS	Makefile	/^LDFALGS= -nostartfiles -T $(TARGET).lds -Ttext $(TEXTBASE)$/;"	m
+NF8ECCERR0	bootstrap.h	30;"	d
+NF8ECCERR1	bootstrap.h	31;"	d
+NF8ECCERR2	bootstrap.h	32;"	d
+NFADDR	bootstrap.h	8;"	d
+NFCMMD	bootstrap.h	7;"	d
+NFCONF	bootstrap.h	4;"	d
+NFCONT	bootstrap.h	5;"	d
+NFDATA	bootstrap.h	9;"	d
+NFEBLK	bootstrap.h	17;"	d
+NFECCERR0	bootstrap.h	21;"	d
+NFECCERR1	bootstrap.h	22;"	d
+NFM8ECC0	bootstrap.h	34;"	d
+NFM8ECC1	bootstrap.h	35;"	d
+NFM8ECC2	bootstrap.h	36;"	d
+NFM8ECC3	bootstrap.h	37;"	d
+NFMECC0	bootstrap.h	24;"	d
+NFMECC1	bootstrap.h	25;"	d
+NFMECCD0	bootstrap.h	11;"	d
+NFMECCD1	bootstrap.h	12;"	d
+NFMLCBITPT	bootstrap.h	28;"	d
+NFMLCBITPT0	bootstrap.h	39;"	d
+NFMLCBITPT1	bootstrap.h	40;"	d
+NFSBLK	bootstrap.h	16;"	d
+NFSECC	bootstrap.h	26;"	d
+NFSECCD	bootstrap.h	14;"	d
+NFSTAT	bootstrap.h	19;"	d
 OBJCOPY	Makefile	/^OBJCOPY  = $(CROSS_COMPILE)objcopy$/;"	m
 OBJDUMP	Makefile	/^OBJDUMP  = $(CROSS_COMPILE)objdump$/;"	m
 OBJ_ALL	Makefile	/^OBJ_ALL=$(OBJ_C) $(OBJ_S)$/;"	m
@@ -27,9 +57,22 @@ SRC_S	Makefile	/^SRC_S=$(wildcard *.S)$/;"	m
 STRIP	Makefile	/^STRIP    = $(CROSS_COMPILE)strip$/;"	m
 TARGET	Makefile	/^TARGET=bootstrap$/;"	m
 TEXTBASE	Makefile	/^TEXTBASE=0x00000000$/;"	m
+UART0_TX_DISABLE	bootstrap.h	53;"	d
+UART0_TX_ENABLE	bootstrap.h	52;"	d
+UBRDIV0	bootstrap.h	60;"	d
+UCON0	bootstrap.h	50;"	d
+UDIVSLOT0	bootstrap.h	61;"	d
+UFCON0	bootstrap.h	55;"	d
+ULCON0	bootstrap.h	49;"	d
+UMCON0	bootstrap.h	56;"	d
+UTRSTAT0	bootstrap.h	57;"	d
+UTXH0	bootstrap.h	59;"	d
 _start	start.S	/^_start:$/;"	l
 beep_init	bootstrap.c	/^void beep_init(void)$/;"	f
 beep_on_off	bootstrap.c	/^void beep_on_off(void)$/;"	f
+chip_disable	bootstrap.h	47;"	d
+chip_enable	bootstrap.h	46;"	d
+clean_Rnb_bit	bootstrap.h	42;"	d
 clean_bss	start.S	/^clean_bss:$/;"	l
 clean_loop	start.S	/^clean_loop:$/;"	l
 delay	bootstrap.c	/^static inline void delay (unsigned long loops)  $/;"	f	file:
@@ -38,4 +81,14 @@ init_stack	start.S	/^init_stack:$/;"	l
 led_display	bootstrap.c	/^void led_display(void)$/;"	f
 led_init	bootstrap.c	/^void led_init(void)$/;"	f
 main	bootstrap.c	/^int main(int argc, char *argv[])$/;"	f
-mdelay	bootstrap.c	/^void mdelay(unsigned int count)$/;"	f
+mdelay	bootstrap.c	/^void mdelay(void)$/;"	f
+nand_init	nand.c	/^void nand_init(void)$/;"	f
+nand_read_byte	nand.c	/^unsigned char nand_read_byte(void)$/;"	f
+nand_read_id	nand.c	/^void nand_read_id(void)$/;"	f
+nand_reset	nand.c	/^void nand_reset(void)$/;"	f
+nand_write_addr	nand.c	/^void nand_write_addr(unsigned char addr)$/;"	f
+nand_write_cmmd	nand.c	/^void nand_write_cmmd(unsigned char cmmd)$/;"	f
+uart_init	uart.c	/^void uart_init(void)$/;"	f
+uart_tx_byte	uart.c	/^void uart_tx_byte(unsigned char data)$/;"	f
+wait4txdone	bootstrap.h	63;"	d
+wait_Rnb_ready	bootstrap.h	44;"	d

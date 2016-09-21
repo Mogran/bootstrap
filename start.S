@@ -84,14 +84,13 @@ _start:
 
 	bl init_stack @because we will jump to C running enviroment
 	
-	bl clean_bss
+#	bl clean_bss
 
 	bl main
 
 halt_loop:
 	b halt_loop
 	
-
 init_stack:
 	ldr sp, =8192 
 	mov pc, lr

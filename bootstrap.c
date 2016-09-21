@@ -1,3 +1,5 @@
+#include "bootstrap.h"
+
 #define GPACON (*((volatile unsigned int*)0x56000000))
 #define GPADAT (*((volatile unsigned int*)0x56000004))
 
@@ -70,11 +72,12 @@ void beep_on_off(void)
 int main(int argc, char *argv[])
 {
 	beep_init();
-
 	led_init();
+	uart_init();
 
 	while(1){
 		beep_on_off();
+		uart_tx_byte();
 	}
 
 	return 0;
