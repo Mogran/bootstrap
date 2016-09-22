@@ -4,3 +4,6 @@
 - MPU:s3c2416x Nand:S34ML02G100TF100
 - fixed uart send,because the uart of PC works wrong.
 
+FS2416 Board
+- FS2416 board's uart works well,if you wants to use UART0&UART1, you should
+use cross-DB9 line.
