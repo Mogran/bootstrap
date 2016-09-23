@@ -7,3 +7,7 @@
 # FS2416 Board
 - FS2416 board's uart works well,if you wants to use UART0&UART1, you should
 use cross-DB9 line.
+
+# Version 1.0 released
+- this project can provide basic nand check and uart printf
+- it also can init some important communication devices and system peripheral
