@@ -60,6 +60,7 @@ void nand_read_id(void)
 	}
 
 	chip_disable();
+
 }
 
 int nand_erase_one_block(int block)
@@ -70,7 +71,7 @@ int nand_erase_one_block(int block)
 	chip_enable();
 	clean_Rnb_bit();
 	nand_write_cmmd(0x60);
-	nand_write_addr((block&0x03)<<6);	
+	nand_write_addr((block&0x2)<<6);	
 	nand_write_addr((block>>2)&0xff);	
 	nand_write_addr((block>>10)&0xff);	
 	nand_write_cmmd(0xd0);	
@@ -79,11 +80,9 @@ int nand_erase_one_block(int block)
 	
 	nand_write_cmmd(0x70);	
 	data = nand_read_byte();	
-	if((data & 0x01) == 0x01){
+	if(!(data & 0x01)){
 		ret = 1;
 	}
-
-	uart_tx_byte(data);
 
 	chip_disable();
 
@@ -95,16 +94,16 @@ int nand_read_one_page(int block, int page, unsigned char *buf, int size)
 	volatile int i = 0;
 
 	chip_enable();
-	clean_Rnb_bit();
 	nand_write_cmmd(0x00);
 
 	nand_write_addr(0x00);
 	nand_write_addr(0x00);
-	nand_write_addr(((block&0x03)<<6) | page);	
+	nand_write_addr(((block&0x2)<<6) | page);	
 	nand_write_addr((block>>2)&0xff);	
 	nand_write_addr((block>>10)&0xff);	
 
 	nand_write_cmmd(0x30);
+	clean_Rnb_bit();
 	wait_Rnb_ready();
 
 	for(i = 0; i < size; i++){

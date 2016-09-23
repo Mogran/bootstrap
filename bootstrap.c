@@ -1,28 +1,11 @@
 #include "bootstrap.h"
 
-#define GPACON (*((volatile unsigned int*)0x56000000))
-#define GPADAT (*((volatile unsigned int*)0x56000004))
-
-#define GPBCON (*((volatile unsigned int*)0x56000010))
-#define GPBDAT (*((volatile unsigned int*)0x56000014))
-#define GPBUDP (*((volatile unsigned int*)0x56000018))
-
-
-static inline void delay (unsigned long loops)  
+inline void delay (unsigned long loops)  
 {  
     __asm__ volatile ("1:\n"  
         "subs %0, %1, #1\n"  
         "bne 1b":"=r" (loops):"0" (loops));  
 } 
-
-
-void led_init(void)
-{
-	GPACON = 0x0fffffff;
-	GPACON &= ~(3 << 23);
-
-	GPADAT |= (3 << 23);
-}
 
 void mdelay(void)
 {
@@ -31,53 +14,49 @@ void mdelay(void)
 	while(tm--);
 }
 
-void led_display(void)
-{
-	GPADAT |= (3 << 23);
-	mdelay();
-	GPADAT &= ~(3 << 23);
-	mdelay();
-}
 
-void beep_init(void)
+void led_init(void)
 {
 	GPBCON = 0x0;
-	GPBCON |= (1 << 0);//GPB0
-	GPBCON |= (1 << 10);//GPB5
+	GPBCON |= (1 << 6);//GPB3
+	GPBCON |= (1 << 18);//GPB9
 	
 	GPBUDP = 0x0;
-	GPBUDP |= (1 << 1);
-	GPBUDP |= (1 << 11);
-
-	GPBDAT |= (1 << 5); //close LED1
+	GPBUDP |= (1 << 7);
+	GPBUDP |= (1 << 19);
 }
 
 
-void beep_on_off(void)
+void led_display(void)
 {
-#if 0	
-	GPBDAT |= (1 << 5); //beep Beep
-	delay(80000000);
-	GPBDAT &= ~(1 << 5); //close Beep
-	delay(80000000);
-#else
-	GPBDAT |= (1 << 5); //beep Beep
-	mdelay( );
-	GPBDAT &= ~(1 << 5); //close Beep
-	mdelay( );
-#endif
+	GPBDAT |= (1 << 3); //led 1
+	GPBDAT |= (1 << 9); //led 1
+	delay(100000000);
+	GPBDAT &= ~(1 << 3); //led 2
+	GPBDAT &= ~(1 << 9); //led 2
+	delay(100000000);
 }
 
 
 int main(int argc, char *argv[])
 {
-	beep_init();
+	volatile int ret = 0;
+	unsigned char dat[100];
+
 	led_init();
 	uart_init();
+	nand_init();
+
+	nand_read_id();
+	ret = nand_erase_one_block(3);
+	if(ret == 0){
+		nand_read_one_page(3, 0, dat, 10);
+		uart_tx_multiple_bytes(dat, 10);	
+	}
+
 
 	while(1){
-		beep_on_off();
-		uart_tx_byte();
+		led_display();
 	}
 
 	return 0;

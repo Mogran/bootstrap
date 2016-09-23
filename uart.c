@@ -24,15 +24,17 @@ void uart_init(void)
 	UDIVSLOT0 = 0xDFDD;
 }
 
-void uart_tx_byte(void)
+void uart_tx_byte(unsigned char data)
 {
-	volatile int i = 0;
-
-	for(i = 0; i < 6; i++){
-		while(!(UTRSTAT0&0x2));
-		UTXH0 = 0x55;
-	}
-
-	led_display();
+	while(!(UTRSTAT0&0x2));
+	UTXH0 = data;
 }
 
+void uart_tx_multiple_bytes(unsigned char *buf, int size)
+{
+	volatile int ssize = 0;
+
+	for(ssize = 0; ssize < size; ssize++){
+		uart_tx_byte(buf[ssize]);
+	}
+}

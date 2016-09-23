@@ -5,7 +5,7 @@
 #define NFCONT      (*(volatile unsigned int*)0x4E000004)
 
 #define NFCMMD      (*(volatile unsigned char*)0x4E000008)
-#define NFADDR      (*(volatile unsigned char*)0x4E00000c)
+#define NFADDR      (*(volatile unsigned char*)0x4E00000C)
 #define NFDATA      (*(volatile unsigned char*)0x4E000010)
 
 #define NFMECCD0    (*(volatile unsigned int*)0x4E000014)
@@ -46,25 +46,38 @@
 #define chip_enable()	do{NFCONT &= ~(1 << 1);}while(0)
 #define chip_disable()	do{NFCONT |= (1 << 1);}while(0) 
 
-#define ULCON0 		(*(volatile unsigned char*)0x50000000)
-#define UCON0 		(*(volatile unsigned int*)0x50000004)
+#define ULCON0 		(*(volatile unsigned char*) 0x5000C000)
+#define UCON0 		(*(volatile unsigned int*)  0x5000C004)
 
 #define UART0_TX_ENABLE()   do{UCON0 |= (1 << 2);}while(0)
 #define UART0_TX_DISABLE()  do{UCON0 &= ~(3 << 2);}while(0)
 
-#define UFCON0 			(*(volatile unsigned char*)0x50000008)
-#define UMCON0 			(*(volatile unsigned char*)0x5000000C)
-#define UTRSTAT0		(*(volatile unsigned char*)0x50000010)
-#define UTXH0 			(*(volatile unsigned char*)0x50000020)
-#define UBRDIV0 		(*(volatile unsigned short*)0x50000028)
-#define UDIVSLOT0 		(*(volatile unsigned short*)0x5000002C)
+#define UFCON0 			(*(volatile unsigned char*) 0x5000C008)
+#define UMCON0 			(*(volatile unsigned char*) 0x5000C00C)
+#define UTRSTAT0		(*(volatile unsigned char*) 0x5000C010)
+#define UTXH0 			(*(volatile unsigned char*) 0x5000C020)
+#define UBRDIV0 		(*(volatile unsigned short*)0x5000C028)
+#define UDIVSLOT0 		(*(volatile unsigned short*)0x5000C02C)
 
 #define wait4txdone()  while(!(UTRSTAT0& 0x2))
 
 extern void uart_init(void);
 extern void nand_init(void);
-extern void uart_tx_byte(void);
+extern void nand_read_id(void);
+extern void uart_tx_byte(unsigned char data);
+extern void uart_tx_multiple_bytes(unsigned char *dat, int sszie);
 extern void mdelay(void);
+extern void beep_on_off(void);
+extern inline void delay(unsigned long loops);
+extern int nand_read_one_page(int block, int page, unsigned char *buf, int size);
+extern int nand_erase_one_block(int bolck);
+
+#define GPACON (*((volatile unsigned int*)0x56000000))
+#define GPADAT (*((volatile unsigned int*)0x56000004))
+
+#define GPBCON (*((volatile unsigned int*)0x56000010))
+#define GPBDAT (*((volatile unsigned int*)0x56000014))
+#define GPBUDP (*((volatile unsigned int*)0x56000018))
 
 #define GPHCON 		(*(volatile unsigned int*)0x56000070)
 #define GPHDAT 		(*(volatile unsigned int*)0x56000074)

@@ -58,23 +58,23 @@ _start:
 	str r1, [r0]
 
 	ldr r0, =MPLLCON
-	ldr r1, =0x00640061 @Mpll Fout = 800MHZ
+	ldr r1, =(0 << 24)+(400 << 14)+(3 << 5)+(1 << 0)
 	str r1, [r0]
 
 	ldr r0, =EPLLCON
-	ldr r1, =0x00200102 @Epll Fout=96MHZ
+	ldr r1, =(0 << 24)+(32 << 16)+(1 << 8)+(2 << 0)
 	str r1, [r0]
 
 	ldr r0, =LOCKCON0
-	ldr r1, =0x0000ffff
+	ldr r1, =3600
 	str r1, [r0]
 
 	ldr r0, =LOCKCON1
-	ldr r1, =0x0000ffff
+	ldr r1, =3600
 	str r1, [r0]
 
 	ldr r0, =CLKSRC
-	mov r1, #0x10 
+	ldr r1, =(1 << 6)+(1 << 4)
 	str r1, [r0]
 
 #wait until clock stablize all clock.
