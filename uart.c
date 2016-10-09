@@ -10,9 +10,11 @@ void uart_init(void)
 	GPHCON &= ~((3 << 14) | (3 << 12));
 	GPHCON |= (2 << 14) |(2 << 12); 
 
+	/* enable uart0's pull up*/
 	GPHUDP &= ~((3 << 2) | (3 << 0));
 	GPHUDP |= (2 << 2) |(2 << 0); 
 
+	/* enable uart3's pull up*/
 	GPHUDP &= ~((3 << 14) | (3 << 12));
 	GPHUDP |= (2 << 14) |(2 << 12); 
 
